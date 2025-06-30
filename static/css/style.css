@@ -87,5 +87,6 @@ footer a {
 }
 
 footer a:hover {
-	color: #333;
+	color: #ccc;
+	text-decoration: underline;
 }
