@@ -1,30 +1,35 @@
+name: Update specific child
+
 on:
-  repository_dispatch:
-    types: [child_updated]
+    repository_dispatch:
+        types: [child_updated]
+
+permissions:
+    contents: write
 
 jobs:
-  update-specific-child:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get child name
-        run: echo "TARGET_CHILD=${{ github.event.client_payload.child }}" >> $GITHUB_ENV
+    update-specific-child:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get child name
+              run: echo "TARGET_CHILD=${{ github.event.client_payload.child }}" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+            - uses: actions/checkout@v3
 
-      - name: Clone updated child only
-        run: |
-          echo "Fetching $TARGET_CHILD..."
-          git clone --depth=1 https://github.com/hi2ma-bu4/$TARGET_CHILD.git tmp-child
+            - name: Clone updated child only
+              run: |
+                  echo "Fetching $TARGET_CHILD..."
+                  git clone --depth=1 https://github.com/hi2ma-bu4/$TARGET_CHILD.git tmp-child
 
-      - name: Copy to public dir
-        run: |
-          mkdir -p ./public/$TARGET_CHILD
-          cp -r tmp-child/* ./public/$TARGET_CHILD/
+            - name: Copy to public dir
+              run: |
+                  mkdir -p ./public/$TARGET_CHILD
+                  cp -r tmp-child/* ./public/$TARGET_CHILD/
 
-      - name: Commit & push
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add ./public/$TARGET_CHILD
-          git commit -m "Update from $TARGET_CHILD"
-          git push origin main
+            - name: Commit & push
+              run: |
+                  git config user.name github-actions
+                  git config user.email github-actions@github.com
+                  git add ./public/$TARGET_CHILD
+                  git commit -m "Update from $TARGET_CHILD"
+                  git push origin main
