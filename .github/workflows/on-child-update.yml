@@ -21,15 +21,29 @@ jobs:
                   echo "Fetching $TARGET_CHILD..."
                   git clone --depth=1 https://github.com/hi2ma-bu4/$TARGET_CHILD.git tmp-child
 
+            - name: Copy only required files
+              run: |
+                  mkdir -p ./public/$TARGET_CHILD
+                  cp -r tmp-child/test ./public/$TARGET_CHILD/ || true
+                  cp -r tmp-child/dist ./public/$TARGET_CHILD/ || true
+                  cp -r tmp-child/types ./public/$TARGET_CHILD/ || true
+                  cp tmp-child/LICENSE ./public/$TARGET_CHILD/ || true
+
             - name: Copy to public dir
               run: |
                   mkdir -p ./public/$TARGET_CHILD
                   cp -r tmp-child/* ./public/$TARGET_CHILD/
 
             - name: Commit & push
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   git config user.name github-actions
                   git config user.email github-actions@github.com
                   git add ./public/$TARGET_CHILD
+                  if git diff --cached --quiet; then
+                    echo "No changes to commit."
+                    exit 0
+                  fi
                   git commit -m "Update from $TARGET_CHILD"
-                  git push origin main
+                  git push https://x-access-token:${GITHUB_TOKEN}@github.com/hi2ma-bu4/RepoShowcase.git HEAD:main
