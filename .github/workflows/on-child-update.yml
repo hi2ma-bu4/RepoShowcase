@@ -45,5 +45,5 @@ jobs:
                     echo "No changes to commit."
                     exit 0
                   fi
-                  git commit -m "Update from $TARGET_CHILD"
+                  git commit -m "🔄Update from $TARGET_CHILD"
                   git push https://x-access-token:${GITHUB_TOKEN}@github.com/hi2ma-bu4/RepoShowcase.git HEAD:main
