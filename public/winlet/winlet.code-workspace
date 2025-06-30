@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"code-runner.executorMap": {
+			"javascript": "./build.bat",
+			"typescript": "./build.bat",
+			"bat": "cmd /c",
+		},
+		"cSpell.words": [
+			"baseclass",
+			"maximizable",
+			"minimizable",
+			"reorderable",
+			"windowmanager",
+			"winlet"
+		]
+	}
+}
