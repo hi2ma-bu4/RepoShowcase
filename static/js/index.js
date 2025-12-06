@@ -14,6 +14,11 @@ const libraries = [
 		description: "独自言語『SnowFall』のコンパイル、実行環境を提供する。",
 		github: "SnowFall",
 	},
+	{
+		name: "PseudoDebugKit",
+		description: "疑似的なdevtoolsの機能が使えるライブラリ(お遊び用)。",
+		github: "PseudoDebugKit",
+	},
 ];
 
 jasc.on("DOMContentLoaded", () => {
