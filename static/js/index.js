@@ -15,6 +15,11 @@ const libraries = [
 		github: "SnowFall",
 	},
 	{
+		name: "FlowKeys",
+		description: "キー入力で(コナミコマンドとかの)コマンド判定が出来るやつ",
+		github: "FlowKeys",
+	},
+	{
 		name: "PseudoDebugKit",
 		description: "疑似的なdevtoolsの機能が使えるライブラリ(お遊び用)。",
 		github: "PseudoDebugKit",
