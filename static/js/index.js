@@ -15,6 +15,11 @@ const libraries = [
 		github: "SnowFall",
 	},
 	{
+		name: "SnowFall2",
+		description: "独自言語『SnowFall』をRustで1から再設計したライブラリ。",
+		github: "SnowFall2",
+	},
+	{
 		name: "FlowKeys",
 		description: "キー入力で(コナミコマンドとかの)コマンド判定が出来るやつ",
 		github: "FlowKeys",
