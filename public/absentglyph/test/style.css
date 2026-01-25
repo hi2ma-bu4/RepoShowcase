@@ -1,0 +1,52 @@
+body {
+    padding: 24px;
+}
+
+.container {
+    display: flex;
+    gap: 16px;
+}
+
+.panel {
+    flex: 1;
+}
+
+textarea {
+    width: 100%;
+    height: 300px;
+    font-size: 24px;
+    line-height: 1.4;
+    white-space: pre;
+    font-kerning: normal;
+    font-feature-settings: "kern" 1;
+    letter-spacing: 0;
+    text-rendering: geometricPrecision;
+}
+
+.preview {
+    margin-top: 12px;
+    padding: 12px;
+    min-height: 120px;
+    border: 1px solid #ccc;
+    font-size: 24px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    font-kerning: normal;
+    font-feature-settings: "kern" 1;
+}
+
+.github-link {
+    position: fixed;
+    right: 8px;
+    bottom: 6px;
+    font-size: 11px;
+    color: #666;
+    text-decoration: none;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
+
+.github-link:hover {
+    opacity: 0.9;
+}

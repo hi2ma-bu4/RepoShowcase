@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8" />
+	<title>AbsentGlyph font</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- キャッシュ無効 -->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+
+	<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+	<h1>フォント比較</h1>
+
+	<div class="container">
+		<div class="panel">
+			<h2>MS ゴシック</h2>
+			<textarea id="left"></textarea>
+			<div id="leftPreview" class="preview"></div>
+		</div>
+
+		<div class="panel">
+			<h2>absentglyph</h2>
+			<textarea id="right"></textarea>
+			<div id="rightPreview" class="preview"></div>
+		</div>
+	</div>
+
+	<a href="https://github.com/hi2ma-bu4/absentglyph" class="github-link" target="_blank" rel="noopener noreferrer">
+		hi2ma-bu4 (GitHub)
+	</a>
+
+	<script type="module">
+		const FONT_VERSION = Date.now();
+		const FONT_URL = `../fonts/absentglyph.ttf?v=${FONT_VERSION}`;
+
+		const font = new FontFace(
+			"AbsentGlyph",
+			`url(${FONT_URL}) format("truetype")`
+		);
+
+		font.load().then(loaded => {
+			document.fonts.add(loaded);
+
+			const left = document.getElementById("left");
+			const right = document.getElementById("right");
+			const leftPreview = document.getElementById("leftPreview");
+			const rightPreview = document.getElementById("rightPreview");
+
+			left.style.fontFamily = '"MS Gothic", sans-serif';
+			right.style.fontFamily = '"AbsentGlyph", sans-serif';
+
+			right.style.fontFamily = '"AbsentGlyph", sans-serif';
+			rightPreview.style.fontFamily = '"AbsentGlyph", sans-serif';
+
+			const syncAll = src => {
+				const v = src.value;
+				left.value = right.value = v;
+				leftPreview.textContent = rightPreview.textContent = v;
+			};
+
+			left.addEventListener("input", () => syncAll(left));
+			right.addEventListener("input", () => syncAll(right));
+
+			// 初期テキスト（PUA / 記号向け）
+			const init = `
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789
+
+b7 nd`;
+			left.value = right.value = init.trim();
+			leftPreview.textContent = rightPreview.textContent = init.trim();
+			console.log("font loaded:", FONT_URL);
+		}).catch(err => {
+			console.error("font load failed", err);
+		});
+	</script>
+</body>
+</html>
