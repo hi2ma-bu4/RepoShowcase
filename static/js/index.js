@@ -29,6 +29,11 @@ const libraries = [
 		description: "疑似的なdevtoolsの機能が使えるライブラリ(お遊び用)。",
 		github: "PseudoDebugKit",
 	},
+	{
+		name: "AbsentGlyph",
+		description: "自作Font(用途不明)",
+		github: "absentglyph",
+	},
 ];
 
 jasc.on("DOMContentLoaded", () => {
