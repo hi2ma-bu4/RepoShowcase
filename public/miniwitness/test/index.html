@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Mini Witness</title>
+
+	<link rel="stylesheet" href="./style.css">
+	<script type="module" src="./main.js"></script>
+</head>
+<body>
+	<div id="ui-overlay">
+		<h1>Mini Witness</h1>
+		<div class="controls">
+			<div class="control-group">
+				<label for="size-select">Grid Size:</label>
+				<select id="size-select">
+					<option value="2">2x2</option>
+					<option value="3">3x3</option>
+					<option value="4">4x4</option>
+					<option value="5" selected>5x5</option>
+					<option value="6">6x6</option>
+					<option value="7">7x7</option>
+					<option value="8">8x8</option>
+				</select>
+			</div>
+			<div class="control-group">
+				<label><input type="checkbox" id="use-hexagons"> Hexagons</label>
+				<label><input type="checkbox" id="use-squares" checked> Squares</label>
+				<label><input type="checkbox" id="use-stars" checked> Stars</label>
+				<label><input type="checkbox" id="use-tetris" checked> Tetris</label>
+				<label><input type="checkbox" id="use-eraser"> Erasers</label>
+				<label><input type="checkbox" id="use-broken-edges"> Cuts</label>
+			</div>
+			<div class="control-group">
+				<label for="complexity-slider">Complexity (Constraint Density):</label>
+				<input type="range" id="complexity-slider" min="0" max="1" step="0.1" value="1">
+			</div>
+			<div class="control-group">
+				<label for="difficulty-slider">Difficulty (Hardest at 1.0):</label>
+				<input type="range" id="difficulty-slider" min="0" max="1" step="0.1" value="1">
+			</div>
+			<button id="new-puzzle-btn">New Puzzle</button>
+		</div>
+		<div id="status-message">Draw a path from the large circle to the exit!</div>
+	</div>
+
+	<div id="game-container">
+		<canvas id="game-canvas"></canvas>
+	</div>
+
+	<div class="instructions">
+		<p><strong>操作方法:</strong> 始点（大きな丸）からドラッグして線を引き、出口まで繋げてください。</p>
+	</div>
+</body>
+</html>
