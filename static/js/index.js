@@ -34,6 +34,11 @@ const libraries = [
 		description: "自作Font(用途不明)",
 		github: "absentglyph",
 	},
+	{
+		name: "MiniWitness",
+		description: "Witnessのパズル自動生成ツール",
+		github: "miniwitness",
+	},
 ];
 
 jasc.on("DOMContentLoaded", () => {
