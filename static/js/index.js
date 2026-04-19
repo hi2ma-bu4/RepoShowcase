@@ -39,6 +39,11 @@ const libraries = [
 		description: "Witnessのパズル自動生成ツール",
 		github: "miniwitness",
 	},
+	{
+		name: "LFT",
+		description: "可逆圧縮の自作画像フォーマット変換ツール",
+		github: "lft",
+	},
 ];
 
 jasc.on("DOMContentLoaded", () => {
