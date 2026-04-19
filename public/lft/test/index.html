@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>LFT (Lossless Frequency Transform)</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', sans-serif;
+			background: #1a1a1a;
+			color: #eee;
+			padding: 20px;
+		}
+
+		.dashboard {
+			/* 4カラムに変更 */
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 15px;
+			margin-bottom: 20px;
+		}
+
+		.card {
+			background: #2a2a2a;
+			padding: 15px;
+			border-radius: 8px;
+			border-bottom: 3px solid #3498db;
+		}
+
+		.card h4 {
+			margin: 0;
+			font-size: 12px;
+			color: #aaa;
+			text-transform: uppercase;
+		}
+
+		.val {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 5px;
+		}
+
+		.controls {
+			background: #2a2a2a;
+			padding: 20px;
+			border-radius: 8px;
+			margin-bottom: 20px;
+		}
+
+		#status-log {
+			font-weight: bold;
+			padding: 10px;
+			background: #000;
+			border-radius: 4px;
+			margin-bottom: 10px;
+			min-height: 1.2em;
+		}
+
+		.viewer {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
+		}
+
+		canvas {
+			width: 100%;
+			border: 1px solid #444;
+			background: #000;
+			border-radius: 4px;
+		}
+
+		button {
+			background: #3498db;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		button:disabled {
+			background: #555;
+			cursor: not-allowed;
+		}
+
+		input[type="file"] {
+			color: #aaa;
+		}
+	</style>
+</head>
+<body>
+	<h2>LFT</h2>
+
+	<div class="dashboard">
+		<div class="card">
+			<h4>File Size (PNG/JPG)</h4>
+			<div id="stat-file-size" class="val">-</div>
+		</div>
+		<div class="card">
+			<h4>Raw Pixels</h4>
+			<div id="stat-orig-size" class="val">-</div>
+		</div>
+		<div class="card">
+			<h4>Compressed (LFT)</h4>
+			<div id="stat-comp-size" class="val">-</div>
+		</div>
+		<div class="card">
+			<h4>Efficiency (vs Raw)</h4>
+			<div id="stat-ratio" class="val">-</div>
+		</div>
+	</div>
+
+	<div class="controls">
+		<div id="status-log">画像をアップロードしてください。</div>
+		<div style="display:flex; gap:20px; align-items:center;">
+			<label>📸 Encode: <input type="file" id="upload" accept="image/*"></label>
+			<label>📂 Decode: <input type="file" id="upload-lft" accept=".lft"></label>
+			<button id="btn-download" disabled>Save .lft</button>
+		</div>
+	</div>
+
+	<div class="viewer">
+		<div>
+			<h3>Original</h3><canvas id="canvas-orig"></canvas>
+		</div>
+		<div>
+			<h3>Reconstructed</h3><canvas id="canvas-recon"></canvas>
+		</div>
+	</div>
+
+	<script src="../dist/LFT.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
