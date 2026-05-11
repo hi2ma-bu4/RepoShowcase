@@ -1,5 +1,10 @@
 const libraries = [
 	{
+		name: "BigFloat",
+		description: "JavaLibraryScriptから移植した巨大小数ライブラリ。",
+		github: "BigFloat",
+	},
+	{
 		name: "JavaLibraryScript",
 		description: "JavaScriptでJavaっぽい機能を提供するライブラリ。",
 		github: "JavaLibraryScript",
