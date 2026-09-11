@@ -5,15 +5,4 @@ export type DebugOptions = {
     shortcuts?: boolean;
     prefix?: string;
 };
-export type OverlaySet = {
-    content: HTMLElement;
-    paddingTop: HTMLElement;
-    paddingRight: HTMLElement;
-    paddingBottom: HTMLElement;
-    paddingLeft: HTMLElement;
-    marginTop: HTMLElement;
-    marginRight: HTMLElement;
-    marginBottom: HTMLElement;
-    marginLeft: HTMLElement;
-};
 //# sourceMappingURL=types.d.ts.map

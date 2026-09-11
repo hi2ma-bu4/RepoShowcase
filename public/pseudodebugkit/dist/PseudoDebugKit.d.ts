@@ -1,4 +1,5 @@
 import type { DebugOptions } from "./types";
+export type { DebugOptions };
 export declare class PseudoDebugKit {
     private opts;
     private root?;
