@@ -4,11 +4,20 @@ import { AppConfig, handleWorkerMessage, TransportApi } from "../../dist/QrDataT
 
 const createMockWorker = () => {
 	const listeners = new Map<string, Array<(e: any) => void>>();
+
+	const dispatch = (event: string, data: any) => {
+		const list = listeners.get(event) || [];
+		for (const fn of list) {
+			fn({ data });
+		}
+	};
+
 	return {
 		addEventListener(event: string, fn: (e: any) => void) {
 			if (!listeners.has(event)) listeners.set(event, []);
 			listeners.get(event)!.push(fn);
 		},
+
 		removeEventListener(event: string, fn: (e: any) => void) {
 			const list = listeners.get(event) || [];
 			listeners.set(
@@ -16,15 +25,24 @@ const createMockWorker = () => {
 				list.filter((l) => l !== fn),
 			);
 		},
+
 		postMessage(data: any) {
+			// 本物の Worker と同じ READY ハンドシェイクに対応
+			if (data?.type === "__QRDT_WORKER_PING__") {
+				Promise.resolve().then(() => {
+					dispatch("message", {
+						type: "__QRDT_WORKER_READY__",
+					});
+				});
+				return;
+			}
+
 			Promise.resolve().then(async () => {
 				const response = await handleWorkerMessage(data);
-				const list = listeners.get("message") || [];
-				for (const fn of list) {
-					fn({ data: response });
-				}
+				dispatch("message", response);
 			});
 		},
+
 		terminate() {},
 	};
 };
@@ -155,5 +173,58 @@ test("WorkerClient request error handling in TransportApi", async () => {
 	}
 
 	assert.ok(errorOccurred);
+	transport.stopReceive();
+});
+
+test("TransportApi.processImageFrame decodes image via worker when enabled", async () => {
+	const transport = new TransportApi(
+		new AppConfig({
+			transport: {
+				useWorker: true,
+				createWorker: createMockWorker,
+			},
+		}),
+	);
+
+	let frameProcessedCalled = false;
+	transport.onFrameProcessed((evt) => {
+		if (evt.validCount === 0 && !evt.isQrDetected) {
+			frameProcessedCalled = true;
+		}
+	});
+
+	await transport.startReceive();
+
+	// Pass dummy invalid RGBA pixels (10x10 = 400 bytes needed, but pass empty/invalid)
+	const dummyPixels = new Uint8Array(100);
+	await transport.processImageFrame(dummyPixels, 10, 10);
+
+	assert.ok(frameProcessedCalled);
+	assert.equal(transport.getState(), "WaitingForFirst");
+	transport.stopReceive();
+});
+
+test("TransportApi.processImageFrame decodes image synchronously when worker is disabled", async () => {
+	const transport = new TransportApi(
+		new AppConfig({
+			transport: {
+				useWorker: false,
+			},
+		}),
+	);
+
+	let frameProcessedCount = 0;
+	transport.onFrameProcessed(() => {
+		frameProcessedCount++;
+	});
+
+	await transport.startReceive();
+
+	// Invalid pixel buffer size for 10x10 -> DataApi.decodeQrImage throws, caught, processFrame(null) called
+	const dummyPixels = new Uint8Array(10);
+	await transport.processImageFrame(dummyPixels, 10, 10);
+
+	assert.ok(frameProcessedCount > 0);
+	assert.equal(transport.getState(), "WaitingForFirst");
 	transport.stopReceive();
 });
